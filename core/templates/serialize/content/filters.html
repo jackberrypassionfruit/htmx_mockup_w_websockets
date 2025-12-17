@@ -1,0 +1,33 @@
+{% block content %}
+{% load static %}
+
+<div class="flex flex-row flex-nowrap justify-between mx-[35px] my-[5px]">
+    <div class="w-1/3 flex flex-row flex-nowrap items-center justify-between">
+        <img class="h-[45px] py-[5px] pr-[5px] pl-0" src="{% static 'svg/refresh.svg' %}">
+        <!-- <input type="text" placeholder="Search Job"> -->
+        <input id="search" type="search" name="q" value="{{ job_search }}" hx-get="/serialize"
+            hx-trigger="change, keyup delay:200ms changed" hx-target="#serialize-gallery" hx-swap="outerHTML"
+            placeholder="Search Job" />
+
+        <img class="h-[45px] py-[5px] pr-[5px] pl-0" src="{% static 'svg/reset.svg' %}">
+    </div>
+    <div id="gallery-title" class="w-1/3 text-[30px] table mx-auto text-center"><strong>Jobs at Serialize</strong>
+    </div>
+    <div class="w-1/3 flex flex-row flex-nowrap items-center justify-between">
+        <div>
+            <div><strong>Site:</strong></div>
+            <select id="browsers">
+                <option default>Select a Site</option>
+                <option value="Burlington">P6B</option>
+                <option value="APD">APD</option>
+                <option value="Cleveland">P6C</option>
+            </select>
+        </div>
+        <div>
+            <input type="checkbox" id="css-toggle">
+            <label for="css-toggle">CSS Filter</label>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

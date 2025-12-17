@@ -1,0 +1,16 @@
+{% block content %}
+{% load static %}
+
+<div class="flex flex-row flex-nowrap justify-between bg-blue-200">
+    <span class="w-1/3 flex">
+        <img class="h-[45px] pt-0" src="{% static 'svg/home.svg' %}">
+        <img class="h-[45px] pt-0" src="{% static 'svg/document.svg' %}">
+        <img class="h-[45px] pt-0" src="{% static 'svg/document.svg' %}">
+    </span>
+    <strong class="text-[45px] text-center w-1/3" id="banner-title">Serialize</strong>
+    <span class="w-1/3">
+        <p></p>
+    </span>
+</div>
+
+{% endblock %}

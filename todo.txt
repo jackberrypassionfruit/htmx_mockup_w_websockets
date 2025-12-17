@@ -1,0 +1,7 @@
+
+
+created an hx-swap-oob endpoint to remove jobs, which is sick
+now I want to use to implement job removal by websocket
+
+Removed this from img reset tag
+    hx-get="serialize/drop-job/{{ row.job_number }}" 

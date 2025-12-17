@@ -1,0 +1,116 @@
+{% block content %}
+{% load static %}
+
+<div id="serialize-gallery" class="gallery border-2 border-solid border-blue-500 mx-4" hx-ext="ws"
+    ws-connect="/ws/serialize/"
+    x-data=" { selected_job: '' , selected_action: '' , isModalOpen: false, isModalOpen2: false }" x-on:keydown.escape="
+        isModalOpen = false;
+        isModalOpen2 = false
+    ">
+
+    {% for row in jobs %}
+    <div id="job-{{ row.job_number }}" class="border-b border-blue-500 flex flex-row flex-nowrap items-center">
+        <div>
+            <form ws-send>
+                <div>
+                    <input type="hidden" name="job_number" value="{{ row.job_number }}">
+                    <input type="hidden" name="action" value="close">
+                    <button type="submit">
+                        <img class="h-[35px]" src="{% static 'svg/reset.svg' %}">
+                    </button>
+                </div>
+            </form>
+            <strong>Close</strong>
+        </div>
+        <div class="p-[10px]">
+            <div class="h-[15px]">
+                <strong>Job #{{ row.job_number }}</strong>
+                {% if row.request_type == 'Eng Trial' %}
+                <img class="h-[15px]" src="{% static 'svg/flag.svg' %}">
+                {% endif %}
+            </div>
+            <div>
+                <em><strong>Qty Parts: </strong>{{ row.qty_parts }}</em>
+            </div>
+        </div>
+        <div class="p-[10px]">
+            <img class="table mx-auto h-[45px]" src="{% static 'svg/select.svg' %}"
+                @click="selected_job = '{{ row.job_number }}'"
+                :class="{ 'selected': selected_job == '{{ row.job_number }}' }">
+            <div class="table mx-auto"><em>Select job</em></div>
+        </div>
+        <div class="p-[10px]">
+            <span class="eng-review">
+                <input type="checkbox" id="eng-toggle-{{ row.job_number }}">
+                <label for="eng-toggle-{{ row.job_number }}">Eng Review</label>
+            </span>
+            <span class="eng-review">
+                <input type="checkbox" id="mrb-toggle-{{ row.job_number }}">
+                <label for="mrb-toggle-{{ row.job_number }}">MRB</label>
+            </span>
+        </div>
+        <div class="p-[10px] flex-[2]">
+            <span class="table mx-auto">
+                <input type="checkbox" id="serialized-toggle-{{ row.job_number }}">
+                <label for="serialized-toggle-{{ row.job_number }}">All Parts Serialized?</label>
+            </span>
+        </div>
+        <div class="p-[10px]" x-show="selected_job == '{{ row.job_number }}'">
+            <span class="flex flex-col align-center">
+                <img class="h-[45px]" @click="isModalOpen = true; selected_action='Scrap parts?'"
+                    x-bind:disabled="selected_job != '{{ row.job_number }}'"
+                    hx-get="/serialize/get-parts/{{ row.job_number }}" hx-target="next .parts" hx-trigger="click"
+                    hx-swap="innerHTML" src="{% static 'svg/cancel.svg' %}">
+                <em>Scrap Parts</em>
+            </span>
+        </div>
+        <div class="p-[10px]">
+            <button
+                class="h-[65px] rounded-lg bg-blue-400 active:bg-[rgb(119,204,233)] disabled:bg-blue-100 border-2 border-solid"
+                @click="isModalOpen = true; selected_action='Move Job?'"
+                x-bind:disabled="selected_job != '{{ row.job_number }}'"
+                hx-get="serialize/get-parts/{{ row.job_number }}" hx-target="next .parts" hx-trigger="click"
+                hx-swap="innerHTML">Finish Serialize</button>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="flex items-center justify-center fixed z-10 w-4/5 h-full left-[10%] top-0" role="dialog" tabindex="-1"
+        x-show="isModalOpen" x-on:click.away="isModalOpen = false" x-cloak x-transition>
+        <div class="bg-white rounded-lg max-w-[800px] p-8 m-auto">
+            <div class="flex items-center justify-between border-b-2 border-black">
+                <h3 x-text="selected_action"></h3>
+                <a aria-label="Close" x-on:click="isModalOpen = false">✖</a>
+            </div>
+            <ul class="parts"></ul>
+            <input type="hidden" id="selected-job-input" name="selected_job" x-bind:value="selected_job">
+            <input type="hidden" name="action" value="move">
+            <form ws-send>
+                <a class="border-2 border-solid bg-red-400 rounded-lg p-2 mt-2"
+                    x-on:click="isModalOpen = false">Cancel</a>
+                <input type="hidden" name="job_number" x-bind:value="selected_job">
+                <input type="hidden" name="action" value="move">
+                <button class="border-2 border-solid bg-blue-400 rounded-lg p-2 mt-2" x-on:click="isModalOpen = false"
+                    id="move">Are you sure?</button>
+            </form>
+        </div>
+    </div>
+    <div class="flex items-center justify-center fixed z-10 w-4/5 h-full left-[10%] top-0" role="dialog" tabindex="-1"
+        x-show="isModalOpen2" x-on:click.away="isModalOpen2 = false" x-cloak x-transition>
+        <div class="bg-white rounded-lg max-w-[800px] p-8 m-auto">
+            <div class="flex items-center justify-between border-b-2 border-black">
+                <h3 x-text="selected_action"></h3>
+            </div>
+            <form ws-send>
+                <a class="border-2 border-solid bg-red-400 p-2 mt-2" aria-label="Close"
+                    x-on:click="isModalOpen2 = false">✖</a>
+                <input type="hidden" name="job_number" x-bind:value="selected_job">
+                <input type="hidden" name="action" value="move">
+                <button class="border-2 border-solid bg-blue-400 rounded-lg p-2 mt-2" x-on:click="isModalOpen2 = false"
+                    id="move">Are you sure?</button>
+            </form>
+        </div>
+    </div>
+    <div class="w-full h-full fixed top-0 left-0 bg-black opacity-75" x-show="isModalOpen" x-cloak></div>
+    <div class="w-full h-full fixed top-0 left-0 bg-black opacity-75" x-show="isModalOpen2" x-cloak></div>
+</div>
+{% endblock %}

@@ -1,0 +1,21 @@
+[project]
+name = "htmx-cores-hub"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "channels-redis>=4.3.0",
+    "channels[daphne]>=4.3.2",
+    "django>=6.0",
+    "django-allauth>=65.13.1",
+    "django-extensions>=4.1",
+    "django-htmx>=1.27.0",
+    "pillow>=12.0.0",
+    "python-dateutil>=2.9.0.post0",
+]
+
+[dependency-groups]
+dev = [
+    "polars-lts-cpu>=1.33.1",
+]
