@@ -1,0 +1,65 @@
+{% load static %}
+<div id="serialize-job-{{ row.job_number }}" class="border-b border-blue-500 flex flex-row flex-nowrap items-center">
+    <div>
+        <form ws-send>
+            <div>
+                <input type="hidden" name="job_number" value="{{ row.job_number }}">
+                <input type="hidden" name="action" value="close">
+                <input type="hidden" name="page" value="serialize">
+                <button type="submit">
+                    <img class="h-[35px]" src="{% static 'svg/reset.svg' %}">
+                </button>
+            </div>
+        </form>
+        <strong>Close</strong>
+    </div>
+    <div class="p-[10px]">
+        <div class="h-[15px]">
+            <strong>Job #{{ row.job_number }}</strong>
+            {% if row.request_type == 'Eng Trial' %}
+            <img class="h-[15px]" src="{% static 'svg/flag.svg' %}">
+            {% endif %}
+        </div>
+        <div>
+            <em><strong>Qty Parts: </strong>{{ row.qty_parts }}</em>
+        </div>
+    </div>
+    <div class="p-[10px]">
+        <img class="table mx-auto h-[45px]" src="{% static 'svg/select.svg' %}"
+            @click="selected_job = '{{ row.job_number }}'"
+            :class="{ 'selected': selected_job == '{{ row.job_number }}' }">
+        <div class="table mx-auto"><em>Select job</em></div>
+    </div>
+    <div class="p-[10px]">
+        <span class="eng-review">
+            <input type="checkbox" id="eng-toggle-{{ row.job_number }}">
+            <label for="eng-toggle-{{ row.job_number }}">Eng Review</label>
+        </span>
+        <span class="eng-review">
+            <input type="checkbox" id="mrb-toggle-{{ row.job_number }}">
+            <label for="mrb-toggle-{{ row.job_number }}">MRB</label>
+        </span>
+    </div>
+    <div class="p-[10px] flex-[2]">
+        <span class="table mx-auto">
+            <input type="checkbox" id="serialized-toggle-{{ row.job_number }}">
+            <label for="serialized-toggle-{{ row.job_number }}">All Parts Serialized?</label>
+        </span>
+    </div>
+    <div class="p-[10px]" x-show="selected_job == '{{ row.job_number }}'">
+        <span class="flex flex-col align-center">
+            <img class="h-[45px]" @click="isModalOpen = true; selected_action='Scrap parts?'"
+                x-bind:disabled="selected_job != '{{ row.job_number }}'"
+                hx-get="get-parts/serialize/{{ row.job_number }}" hx-target="next .parts" hx-trigger="click"
+                hx-swap="innerHTML" src="{% static 'svg/cancel.svg' %}">
+            <em>Scrap Parts</em>
+        </span>
+    </div>
+    <div class="p-[10px]">
+        <button
+            class="h-[65px] rounded-lg bg-blue-400 active:bg-[rgb(119,204,233)] disabled:bg-blue-100 border-2 border-solid"
+            @click="isModalOpen = true; selected_action='Move Job?'"
+            x-bind:disabled="selected_job != '{{ row.job_number }}'" hx-get="get-parts/serialize/{{ row.job_number }}"
+            hx-target="next .parts" hx-trigger="click" hx-swap="innerHTML">Finish Serialize</button>
+    </div>
+</div>

@@ -1,15 +1,13 @@
 {% block content %}
-
 <div hx-ext="ws" ws-connect="/ws/cores_hub/">
-    <div id="serialize-gallery" class="gallery border-2 border-solid border-blue-500 mx-4"
+    <div id="sort-gallery" class="gallery border-2 border-solid border-blue-500 mx-4"
         x-data=" { selected_job: '' , selected_action: '' , isModalOpen: false }" x-on:keydown.escape="
-            isModalOpen = false;
-            isModalOpen2 = false;
-            show: true
-        " hx-swap="afterbegin settle:200ms">
+        isModalOpen = false;
+        isModalOpen2 = false
+    " hx-swap="afterbegin settle:200ms">
 
         {% for row in jobs %}
-        {% include 'serialize/partials/job-row.html' %}
+        {% include 'sort/partials/job-row.html' %}
         {% endfor %}
         <div class="flex items-center justify-center fixed z-10 w-4/5 h-full left-[10%] top-0" role="dialog"
             tabindex="-1" x-show="isModalOpen" x-on:click.away="isModalOpen = false" x-cloak x-transition>
@@ -19,13 +17,12 @@
                     <a aria-label="Close" x-on:click="isModalOpen = false">✖</a>
                 </div>
                 <ul class="parts"></ul>
-                <input type="hidden" id="selected-job-input" name="selected_job" x-bind:value="selected_job">
                 <form ws-send>
                     <a class="border-2 border-solid bg-red-400 rounded-lg p-2 mt-2"
                         x-on:click="isModalOpen = false">Cancel</a>
                     <input type="hidden" name="job_number" x-bind:value="selected_job">
+                    <input type="hidden" name="page" value="sort">
                     <input type="hidden" name="action" value="move">
-                    <input type="hidden" name="page" value="serialize">
                     <button class="border-2 border-solid bg-blue-400 rounded-lg p-2 mt-2"
                         x-on:click="isModalOpen = false" id="move">Are you sure?</button>
                 </form>
