@@ -33,6 +33,7 @@ ALLOWED_HOSTS = [
     "127.0.1.1",
     "localhost",
     "chub.iamnotgerman.de",
+    "cores-hub.iamnotgerman.de",
 ]
 
 

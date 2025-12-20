@@ -11,3 +11,4 @@ wheels/
 
 # myOwn
 redis_data/
+db.sqlite3

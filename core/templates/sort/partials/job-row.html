@@ -1,6 +1,7 @@
 {% load static %}
-<div id="sort-job-{{ row.job_number }}" class="border-b border-blue-500 flex flex-row flex-nowrap items-center">
-    <div>
+<div id="sort-job-{{ row.job_number }}"
+    class="job-row-new border-b border-blue-500 flex flex-row flex-nowrap items-center">
+    <!-- <div>
         <form ws-send>
             <div>
                 <input type="hidden" name="job_number" value="{{ row.job_number }}">
@@ -12,7 +13,7 @@
             </div>
         </form>
         <strong>Close</strong>
-    </div>
+    </div> -->
     <div class="p-[10px]">
         <div class="h-[15px]">
             <strong>Job #{{ row.job_number }}</strong>
