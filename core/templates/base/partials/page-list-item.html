@@ -1,0 +1,16 @@
+<li>
+  {% if page.slug %}
+    <a href="page/{{ page.slug }}" class="text-primary hover:text-primary-focus underline text-lg">{{ page.name }}</a>
+  {% else %}
+    <div x-data="{showMe: false}">
+      > <a x-on:click="showMe=!showMe" class="text-primary hover:text-primary-focus underline text-lg">{{ page.name }}</a>
+      <ul class="pl-8" x-show="showMe">
+        {% for subpage in page.subpages %}
+          <li class="list-[disclosure-closed]">
+            <a href="page/{{ subpage.slug }}" class="text-primary hover:text-primary-focus underline text-lg">{{ subpage.name }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+</li>

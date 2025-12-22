@@ -1,0 +1,13 @@
+{% block content %}
+<div id="patch-finish-gallery" 
+    class="gallery h-145 overflow-y-auto border-2 border-solid border-blue-500 mx-4"    
+    x-on:keydown.escape="isModalOpen = false" 
+    hx-swap="afterbegin settle:200ms"
+>
+
+    {% for row in jobs %}
+        {% include 'patch-finish/partials/job-row.html' %}
+    {% endfor %}
+    {% include 'patch-finish/content/popup-parts.html' %}
+</div>
+{% endblock %}

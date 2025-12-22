@@ -1,11 +1,17 @@
-from ..models import SerializeMaster, InspectionMaster
+from ..models import SerializeMaster, InspectionMaster, PatchMaster
 
 from django.db.utils import IntegrityError
 from django.contrib import messages
 from django.utils import timezone
 from django.db.models import Count, Q, Max
 
-models_dict = {"serialize": SerializeMaster, "sort": InspectionMaster}
+models_dict = {
+    "serialize": SerializeMaster,
+    "sort": InspectionMaster,
+    "patch-finish": PatchMaster,
+    "patch-cure": PatchMaster,
+    "patch-sand": PatchMaster,
+}
 
 
 def update_end_job(model, job_number, user_name):

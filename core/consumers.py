@@ -3,14 +3,7 @@ import json
 from django.template.loader import render_to_string
 from channels.generic.websocket import WebsocketConsumer
 
-# from django.utils import timezone
-# from django.db.utils import IntegrityError
-# from django.db.models import Count, Q, Max
-# from django.contrib import messages
 from asgiref.sync import async_to_sync
-
-# from .models import SerializeMaster
-from .models_lib.load import models_dict, update_end_job
 
 
 class ProcessConsumer(WebsocketConsumer):
@@ -57,9 +50,15 @@ class ProcessConsumer(WebsocketConsumer):
                 "qty_parts": 24,
             }
             context = {"row": new_row}
+
+            # Create a fake routing for testing
+            slug_mapping = {
+                "serialize": "sort",
+                "sort": "patch-finish",
+                "patch-finish": "serialize",
+            }
             text_data = render_to_string(
-                # {next_page_slug} in the future this will be a lookup
-                "sort/partials/add-job.html",
+                f"{slug_mapping[page]}/partials/add-job.html",
                 context=context,
             )
             # self.send(text_data=text_data)

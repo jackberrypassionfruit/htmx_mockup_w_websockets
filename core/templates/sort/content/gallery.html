@@ -1,9 +1,8 @@
 {% block content %}
 <div hx-ext="ws" ws-connect="/ws/cores_hub/">
     <div id="sort-gallery" class="gallery border-2 border-solid border-blue-500 mx-4"
-        x-data=" { selected_job: '' , selected_action: '' , isModalOpen: false }" x-on:keydown.escape="
-        isModalOpen = false;
-        isModalOpen2 = false
+        x-data="{ selected_job: '' , selected_action: '' , isModalOpen: false }" x-on:keydown.escape="
+        isModalOpen = false
     " hx-swap="afterbegin settle:200ms">
 
         {% for row in jobs %}

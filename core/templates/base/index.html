@@ -2,19 +2,13 @@
 
 {% block content %}
 
-<div class="flex justify-center items-center">
+<div class="flex items-center">
     <div class="bg-white p-6 rounded-lg w-full lg:w-3/4">
         <h1 class="text-4xl">Cores Hub Homepage</h1>
 
-        <p class="text-xl mt-4">Available pages</p>
-
         <ul class="mt-2">
             {% for page in pages %}
-            <li>
-                <a href="{% url 'page' page.slug %}" class="text-primary hover:text-primary-focus underline text-lg">
-                    {{ page.name }}
-                </a>
-            </li>
+            {% include 'base/partials/page-list-item.html' %}
             {% empty %}
             <p>There are no pages available.</p>
             {% endfor %}

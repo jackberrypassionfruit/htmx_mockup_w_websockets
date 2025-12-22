@@ -1,12 +1,3 @@
 
 
-created an hx-swap-oob endpoint to remove jobs, which is sick
-now I want to use to implement job removal by websocket
-
-Removed this from img reset tag
-    hx-get="serialize/drop-job/{{ row.job_number }}" 
-    this was actually awesome, I want to make all requests like this via websockets
-    I feel like that might be a great way to guarantee that requests are synchronous and not duplicated
-
-I dockerized the app, which meant connecting to redis via docker container name instead of localhost IP, 127.0.0.1
-If you want to deploy without redis now, you'll have to change this field in cores_hub/settings.py first
+Redeploy the scheduler but with the backend class-oriented instead of using the global scope, bleugh

@@ -1,0 +1,27 @@
+{% load static %}
+
+<div class="flex flex-row justify-end p-2  m-1">
+    <form ws-send>
+        <input type="hidden" name="job_number" x-bind:value="selected_job">
+        <input type="hidden" name="page" value="patch-finish">
+        <input type="hidden" name="action" value="move">
+        <button class="btn btn-success">Move Job to Patch : Cure</button>
+    </form>
+</div>
+<div class="flex flex-row justify-between  m-2">
+    <input class="p-2" type="search" placeholder="Search Part ID"  name="search_part_id">
+    <img class="h-[45px] py-[5px] pr-[5px] pl-0" src="{% static 'svg/pdf.svg' %}">
+    <button class="btn btn-disabled">Start</button>
+    <button class="btn btn-disabled">End</button>
+    <input class="p-2" type="search" placeholder="Cartridge ID" name="cartridge_id">
+</div>
+<ul id="patch-finish-parts-gallery" 
+    x-show="selected_job != ''"
+    class="
+        h-145 overflow-y-auto border-2 border-solid border-blue-500 m-4 
+        [&>li]:border-1
+        [&_p]:p-2 text-xl
+    ">
+</ul>
+{% comment %} {% include 'patch-finish/partials/parts.html' %} {% endcomment %}
+

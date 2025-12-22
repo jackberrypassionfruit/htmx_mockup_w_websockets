@@ -1,0 +1,32 @@
+{% block content %}
+{% load static %}
+
+<div class="gantt">
+    <div class="blue-line" :style="`left: ${blx}%;`"></div>
+    <div class="clock-hours">
+        <span>Hood-Printer</span>
+        {% for n in clock_hours %}
+        <span @click="blx = '{{ n.offset }}', selected_hour_index = '{{ n.index }}'">{{ n.hour }}</span>
+        {% endfor %}
+    </div>
+    <div class="printer-hood-gallery">
+        {% for assigned_printer, print_hood, printer_model, prints in prints_by_printer %}
+        <div class="printer-row">
+            <span class="row-name">{{ print_hood }} - {{assigned_printer }}</span>
+            --
+            <span class="prints" hx-get="style-test/" hx-trigger="click" hx-target=".test-target">
+                {% for print in prints %}<button class="print-cell"
+                    style="width: {{ print.print_width_style }}; transform: translateX({{ print.x_coord_style }});">
+                    {{ print.print_number }}
+                    {% if print.debug %}
+                    - {{ print.debug }}
+                    {% endif %}
+                </button>{% endfor %}
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="test-target"></div>
+</div>
+
+{% endblock %}

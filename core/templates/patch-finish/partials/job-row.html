@@ -1,0 +1,38 @@
+{% load static %}
+<div id="patch-finish-job-{{ row.master_fk_id__job_number }}"
+    class="job-row-new border-b border-blue-500 flex flex-row flex-nowrap items-center">
+    <div class="p-[10px]">
+        <div class="h-[15px]">
+            <strong>Job #{{ row.master_fk_id__job_number }}</strong>
+            {% if row.request_type == 'Eng Trial' %}
+            <img class="h-[15px]" src="{% static 'svg/flag.svg' %}">
+            {% endif %}
+        </div>
+        <div>
+            <em><strong>Qty Parts: </strong>{{ row.qty_parts }}</em>
+        </div>
+    </div>
+    <div class="flex-[2]"></div>
+    <div class="p-[10px]" x-ignore="selected_job == '{{ row.master_fk_id__job_number }}'">
+        <span class="flex flex-col align-center">
+            <img class="h-[45px]" src="{% static 'svg/cancel.svg' %}"
+            @click="isModalOpen = true; selected_action='Scrap parts?'"
+            x-bind:disabled="selected_job != '{{ row.master_fk_id__job_number }}'" 
+            hx-get="get-parts/patch-finish/{{ row.master_fk_id__job_number }}"
+            hx-target="next .parts" 
+            hx-trigger="click" 
+            hx-swap="innerHTML" >
+            <em>Scrap Parts</em>
+        </span>
+    </div>
+    <div class="p-[10px]">
+        <img class="table mx-auto h-[45px]" src="{% static 'svg/select.svg' %}"
+            @click="selected_job = '{{ row.master_fk_id__job_number }}'"
+            :class="{ 'selected': selected_job == '{{ row.master_fk_id__job_number }}' }"
+            hx-get="get-parts/patch-finish/{{ row.master_fk_id__job_number }}"
+            hx-target="#patch-finish-parts-gallery" 
+            hx-trigger="click" 
+            hx-swap="innerHTML">
+        <div class="table mx-auto"><em>Select job</em></div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+{% block content %}
+{% load static %}
+
+<div class="flex flex-col flex-nowrap items-center">
+    <strong class="text-2xl">Jobs at Patch & Finish</strong>
+    <div class="flex flex-row flex-nowrap justify-between items-end mx-[35px] my-[5px]">
+        <img class="h-[45px] py-[5px] pr-[5px] pl-0" src="{% static 'svg/refresh.svg' %}">
+        <div class="flex flex-col flex-nowrap items-center">
+            <div class="w-1/3 text-[30px] table mx-auto text-center">
+                <div class="flex flex-row flex-nowrap items-center justify-between">
+                    <span class="flex flex-row items-center">
+                        <label for="browsers" class="text-base">Site:</label>
+                        <select id="browsers" class="text-base m-2 p-2">
+                            <option default>Select a Site</option>
+                            <option value="Burlington">P6B</option>
+                            <option value="APD">APD</option>
+                            <option value="Cleveland">P6C</option>
+                        </select>
+                    </span>
+                </div>
+            </div>
+            <input id="patch-finish-search" type="search" class="w-3/4 text-center p-2" name="q" value="{{ job_search }}" hx-get="/patch-finish"
+                hx-trigger="change, keyup delay:200ms changed" hx-target="#patch-finish-gallery" hx-select="#patch-finish-gallery"
+                hx-swap="outerHTML" placeholder="Search Job" />
+        </div>
+        <img class="h-[45px] py-[5px] pr-[5px] pl-0" src="{% static 'svg/reset.svg' %}"
+        @click="selected_job = ''">
+    </div>
+</div>
+
+{% endblock %}
