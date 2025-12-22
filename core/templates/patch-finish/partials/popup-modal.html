@@ -1,0 +1,20 @@
+<div class="flex items-center justify-center fixed z-10 w-4/5 h-full left-[10%] top-0" role="dialog"
+    tabindex="-1" x-show="isModalOpen" @click.away="isModalOpen = false" x-cloak x-transition>
+    <div class="bg-white rounded-lg max-w-[800px] p-8 m-auto">
+        <div class="flex items-center justify-between border-b-2 border-black">
+            <h3 class="text-2xl" x-text="selected_action"></h3>
+            <a class="text-4xl p-2" aria-label="Close" @click="isModalOpen = false">✖</a>
+        </div>
+        <ul class="parts"></ul>
+        <form ws-send>
+            <a class="border-2 border-solid bg-red-400 rounded-lg p-2 mt-2"
+                @click="isModalOpen = false">Cancel</a>
+            <input type="hidden" name="job_number" x-bind:value="selected_job">
+            <input type="hidden" name="page" value="patch-finish">
+            <input type="hidden" name="action" value="move">
+            <button class="border-2 border-solid bg-blue-400 rounded-lg p-2 mt-2"
+                @click="isModalOpen = false" id="move">Are you sure?</button>
+        </form>
+    </div>
+</div>
+<div class="w-full h-full fixed top-0 left-0 bg-black opacity-75" x-show="isModalOpen" x-cloak></div>

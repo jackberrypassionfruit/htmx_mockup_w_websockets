@@ -13,15 +13,15 @@
         </div>
     </div>
     <div class="flex-[2]"></div>
-    <div class="p-[10px]" x-ignore="selected_job == '{{ row.master_fk_id__job_number }}'">
+    <div class="p-[10px]" x-show="selected_job == '{{ row.master_fk_id__job_number }}'">
         <span class="flex flex-col align-center">
             <img class="h-[45px]" src="{% static 'svg/cancel.svg' %}"
-            @click="isModalOpen = true; selected_action='Scrap parts?'"
-            x-bind:disabled="selected_job != '{{ row.master_fk_id__job_number }}'" 
-            hx-get="get-parts/patch-finish/{{ row.master_fk_id__job_number }}"
-            hx-target="next .parts" 
-            hx-trigger="click" 
-            hx-swap="innerHTML" >
+                @click="isModalOpen = true; selected_action='Scrap parts?'"
+                hx-get="get-parts/patch-finish/{{ row.master_fk_id__job_number }}"
+                hx-target="next .parts"
+                hx-trigger="click" 
+                hx-swap="innerHTML"
+            >
             <em>Scrap Parts</em>
         </span>
     </div>
