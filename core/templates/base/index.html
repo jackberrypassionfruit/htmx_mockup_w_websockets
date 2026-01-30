@@ -15,4 +15,12 @@
         </ul>
     </div>
 </div>
+
+<form hx-post="/test-sproc" hx-target="#test-sproc-target" hx-swap="innerHTML">
+    <label for="test-sproc-job-number">Job Number: </label>
+    <input type="text" id="test-sproc-job-number" placeholder="gimme a job" name='job_number'>
+    <button class="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl">Responsive</button>
+</form>
+
+<div id="test-sproc-target"></div>
 {% endblock %}

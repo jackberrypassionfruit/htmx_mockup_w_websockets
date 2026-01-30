@@ -2,23 +2,23 @@
 # FROM python:3.13-slim
 FROM ghcr.io/astral-sh/uv:bookworm-slim
 
-ARG USERNAME=user
-ARG USER_UID=1000
-ARG USER_GID=$USER_UID
-
-RUN groupadd --gid $USER_GID $USERNAME \
-    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
-
-USER $USERNAME
-
-# # The installer requires curl (and certificates) to download the release archive
-# RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates
+# The installer requires curl (and certificates) to download the release archive
+RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates
 
 # # Download the latest installer
 # ADD https://astral.sh/uv/install.sh /uv-installer.sh
 
 # # Run the installer then remove it
 # RUN sh /uv-installer.sh && rm /uv-installer.sh
+
+# Download the package to configure the Microsoft repo
+RUN curl -sSL -O https://packages.microsoft.com/config/debian/13/packages-microsoft-prod.deb \
+    # Install the package
+    && dpkg -i packages-microsoft-prod.deb \
+    # Delete the file
+    && rm packages-microsoft-prod.deb \
+    && apt-get update \
+    && ACCEPT_EULA=Y apt-get install -y msodbcsql18
 
 
 # Ensure the installed binary is on the `PATH`

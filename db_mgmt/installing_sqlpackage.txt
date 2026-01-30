@@ -1,0 +1,4 @@
+cd ~
+wget https://aka.ms/sqlpackage-linux -O sqlpackage.zip
+7z x sqlpackage.zip -osqlpackage
+chmod +x sqlpackage/sqlpackage

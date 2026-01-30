@@ -1,0 +1,19 @@
+I am going to build stored procedures to perform the backend tasks of Cores Hub
+They are going to be roughly the same functionality as what is Cores Hub, but with way fewer I/O back and forth and opportunity for error
+
+Let's start with the perenial Serialize page
+
+Serialize
+
+Inputs
+job_number
+{ hold toggles }
+
+
+LookUp within Sproc
+- current_process
+- next_process
+- selected_parameters
+- next_process_tablename
+- sort_initial_sub_routing
+

@@ -11,4 +11,5 @@ urlpatterns = [
     path("sort", views.sort, name="sort"),
     path("swimlane", views.swimlane, name="swimlane"),
     path("patch-finish", views.patch_finish, name="patch-finish"),
+    path("test-sproc", views.test_sproc, name="test-sproc")
 ]

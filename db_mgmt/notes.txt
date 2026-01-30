@@ -1,0 +1,38 @@
+
+// I want to use DotNet 10 on my system, 
+// but building .dacpacs only works with DotNet 8,
+// So use Docker to generate the .dacpac in bin/Debug
+
+docker run --rm -v $(pwd):/project mcr.microsoft.com/dotnet/sdk:8.0 \
+    bash -c "cd /project && dotnet build CoresHubDB.sqlproj"
+
+
+
+// Now to publish
+
+~/sqlpackage/sqlpackage /Action:Publish \
+    /SourceFile:bin/Debug/CoresHubDB.dacpac \
+    /TargetServerName:192.168.2.108,1433 \
+    /TargetDatabaseName:master \
+    /TargetUser:sa \
+    /TargetPassword:VeryMuchSecure14\! \
+    /TargetTrustServerCertificate:True
+
+
+
+// Generate the deployment script, for validation
+~/sqlpackage/sqlpackage /Action:Script \
+    /SourceFile:bin/Debug/CoresHubDB.dacpac \
+    /TargetServerName:192.168.2.108,1433 \
+    /TargetDatabaseName:master \
+    /TargetUser:sa \
+    /TargetPassword:VeryMuchSecure14\! \
+    /TargetTrustServerCertificate:True \
+    /OutputPath:deploy-script.sql
+
+
+// Import a new .dacpac
+~/sqlpackage/sqlpackage /Action:Import \
+    /SourceFile:dcap-dev-export.bacpac \
+    /TargetConnectionString:"Server=192.168.2.108,1433;User Id=sa;Password=VeryMuchSecure14\!;TrustServerCertificate=True;" \
+    /p:ExcludeObjectTypes=ExternalDataSources\;Credentials

@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.db.models import Count, Q, Max
 
-
 from .models import (
     SerializeMaster,
     InspectionMaster,
@@ -10,6 +9,7 @@ from .models import (
     CoresMasterChangelog,
 )
 from .models_lib.load import models_dict
+from .models_lib.service_class import test_call_sproc
 
 from .libs.swimlane.extract import get_scheduled_prints_df, get_active_printers_df
 from .libs.swimlane.transform import (
@@ -153,3 +153,17 @@ def swimlane(request):
         "swimlane/index.html",
         context={},
     )
+
+def test_sproc(request):
+    if request.method == "POST":
+        job_number = request.POST.get("job_number")
+        
+        test_call_sproc(job_number)
+            
+        return render(
+            request,
+            "base/partials/test-sproc-confirm.html",
+            context={'job_number': job_number }
+        )
+        
+        

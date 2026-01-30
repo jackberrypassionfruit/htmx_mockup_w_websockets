@@ -111,7 +111,9 @@ with transaction.atomic():
     PatchMaster.objects.bulk_create(records_to_insert)
 
 
-for page_slug, model in {"serialize": SerializeMaster, "sort": InspectionMaster}:
+for page_slug, model in dict(
+    {"serialize": SerializeMaster, "sort": InspectionMaster}
+).items():
     # for page_slug, model in models_dict.items():
     records_to_insert = []
     df = pl.read_csv(f"test_files/{page_slug}_master.csv")
