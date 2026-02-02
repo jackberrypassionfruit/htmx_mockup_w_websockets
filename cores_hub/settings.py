@@ -103,10 +103,10 @@ WSGI_APPLICATION = "cores_hub.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "mssql",
-        "NAME": "master",
-        "USER": "sa",
+        "NAME": "DCAP",
+        "USER": "cppazureuser",
         "PASSWORD": env('DB_PASSWORD'),
-        "HOST": "192.168.2.108",
+        "HOST": "cpp-poly6-dev.database.usgovcloudapi.net",
         "PORT": "1433",
         "OPTIONS": {
             "driver": "ODBC Driver 18 for SQL Server",

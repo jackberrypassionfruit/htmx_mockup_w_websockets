@@ -5,6 +5,7 @@ from channels.generic.websocket import WebsocketConsumer
 
 from asgiref.sync import async_to_sync
 
+from .models_lib.load import sp_MoveSerializeTransact
 
 class ProcessConsumer(WebsocketConsumer):
     def connect(self):
@@ -35,6 +36,13 @@ class ProcessConsumer(WebsocketConsumer):
         job_number = text_data_json["job_number"]
         page = text_data_json["page"]
         action = text_data_json["action"]
+        
+        eng_toggle = text_data_json["eng_toggle"] == 'on'
+        mrb_toggle = text_data_json["mrb_toggle"] == 'on'
+        css_toggle = text_data_json["css_toggle"] == 'on'
+        
+        # print('text_data_json:')
+        # print(text_data_json)
 
         if action == "move":
             # update_end_job(
@@ -42,6 +50,16 @@ class ProcessConsumer(WebsocketConsumer):
             #     job_number=job_number,
             #     user_name="Jack Pashayan",
             # )
+            if page == 'serialize':
+                sp_MoveSerializeTransact(
+                    job_number=job_number,
+                    page=page,
+                    sub_process='',
+                    eng_toggle=eng_toggle,
+                    mrb_toggle=mrb_toggle,
+                    css_toggle=css_toggle,
+                    current_user="Jack Pashayan",
+                )
 
             print("sort new job: ", job_number)
             new_row = {
