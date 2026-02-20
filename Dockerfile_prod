@@ -86,10 +86,10 @@ EXPOSE 8000
 # Gunicorn with a sensible worker count for a small site.
 # workers = (2 x CPU cores) + 1 is the standard starting point.
 # Adjust the wsgi module path to match your project name.
-# CMD ["daphne", \
-#     "--bind", "0.0.0.0:8000", \
-#     "--workers", "3", \
-#     "--timeout", "60", \
-#     "cores_hub.asgi:application"]
+CMD ["daphne", \
+    "--bind", "0.0.0.0:8000", \
+    "--workers", "3", \
+    "--timeout", "60", \
+    "cores_hub.asgi:application"]
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
