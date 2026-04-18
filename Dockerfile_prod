@@ -87,9 +87,10 @@ EXPOSE 8000
 # workers = (2 x CPU cores) + 1 is the standard starting point.
 # Adjust the wsgi module path to match your project name.
 CMD ["daphne", \
-    "--bind", "0.0.0.0:8000", \
-    "--workers", "3", \
-    "--timeout", "60", \
+    "-b", "0.0.0.0", \
+    "-p", "8000", \
+    "--http-timeout", "60", \
+    # "--workers", "3", \
     "cores_hub.asgi:application"]
 
 # CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
